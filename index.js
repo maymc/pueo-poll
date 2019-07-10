@@ -20,7 +20,7 @@ const app = express();
 // res.send - immediately send some JSON back to whoever made the request
 
 app.get('/', (req, res) => {
-  res.send({ bye: 'buddy' });
+  res.send({ bye: 'buddyyyyy' });
 });
 
 
