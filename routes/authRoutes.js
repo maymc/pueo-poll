@@ -1,8 +1,11 @@
 const passport = require('passport');
 
-// Exporting a function from this file and assume we will call this function with our express app object. Add app as argument to the function.
+/* Export a function from this file; assume express app object will call this function. Add app as argument to the function.
+*/
 module.exports = (app) => {
-  // App object - an express object used to setup configurations that will listen for incoming requests that is being routed to the express side from the node side. Then it is routed to different route handlers. Handlers are associated/registered to app object.
+  /* App object - an express object used to setup configurations that will listen for incoming requests that is being routed to the express side from the node side.
+    - Then it is routed to different route handlers. Handlers are associated/registered to app object.
+  */
 
   // Route handlers - associate with a given route
 
@@ -15,4 +18,7 @@ module.exports = (app) => {
 
   app.get('/auth/google/callback', passport.authenticate('google'));
 
+  app.get('/api/current_user', (req, res) => {
+    res.send(req.user);
+  })
 }
