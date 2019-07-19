@@ -2,7 +2,14 @@
 
 // NodeJS only has access to common JS modules, need to use 'require' to access them
 const express = require('express');
+const keys = require('./config/keys.js');
+
+const mongoose = require('mongoose');
+require('./models/User.js');
 require('./services/passport.js');
+
+// Instruct mongoose to connect to copy of mongoDB
+mongoose.connect(keys.mongoURI, { useNewUrlParser: true });
 
 // In a single nodeJS proj, there may be several diff express applications, this represents a running express app. Most projects will use a single application.
 const app = express();
