@@ -31,30 +31,28 @@ passport.use(
     callbackURL: '/auth/google/callback',
     proxy: true
   },
-    (accessToken, refreshToken, profile, done) => {
+    async (accessToken, refreshToken, profile, done) => {
       console.log("profile: ", profile);
 
       /* findOne: Search through all User collection records and find the record with this specific googleId
           - Asynchronous action: query returns a promise, chain on a '.then()' which will execute if something was found */
-      User.findOne({ googleId: profile.id }).then((existingUser) => {
-        // If record with given profile id exists, don't create and save a new record
-        if (existingUser) {
-          /* 'done()' function (part of callback): tells passport that we finished creating the user and it should resume the auth process
-            - First arg: error object, communicates to passport if something went wrong
-            - Second arg = user record, tells passport everything went fine, here is the existing user
-          */
-          done(null, existingUser);
-        }
-        // If record with profile id does NOT exist, make a new record
-        else {
-          /* Create a new model instance of the User, one record that might exist in the db. 
-              - 'save()' function: saves the record to the DB
-          */
-          new User({ googleId: profile.id })
-            .save()
-            .then(user => done(null, user));    // this 'user' is the same as the new User model isntance but it is from the db.
-        }
-      });
+      const existingUser = await User.findOne({ googleId: profile.id })
+
+      // If record with given profile id exists, don't create and save a new record
+      if (existingUser) {
+        /* 'done()' function (part of callback): tells passport that we finished creating the user and it should resume the auth process
+          - First arg: error object, communicates to passport if something went wrong
+          - Second arg = user record, tells passport everything went fine, here is the existing user
+        */
+        return done(null, existingUser);
+      }
+      // If record with profile id does NOT exist, make a new record
+      /* Create a new model instance of User, one record that might exist in the db. 
+          - '.save()' function: saves the record to the DB
+      */
+      const user = await new User({ googleId: profile.id }).save()
+      done(null, user);    // this 'user' is the same as the new User model instance but it is from the db.
+
     }
   )
 );
