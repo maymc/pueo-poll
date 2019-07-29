@@ -3,6 +3,8 @@
 // Put initial data layer considerations of the app, the redux side
 // Render root coponent to development
 
+import 'materialize-css/dist/css/materialize.min.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
