@@ -9,15 +9,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
+import reduxThunk from 'redux-thunk';
 
 import App from './components/App';
-
 import reducers from './reducers';  //import statement for all the diff reducers
-
 
 // First arg in createStore() are all the reducers we have in the application
 // 2nd arg is initial state of the app
-const store = createStore(reducers, {}, applyMiddleware());
+const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 
 
 //ReactDOM takes 2 args (1st is the root component, 2nd where we are planning to render that component) Root component will be App component that has all the routing of the application

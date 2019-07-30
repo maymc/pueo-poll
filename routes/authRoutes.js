@@ -16,14 +16,20 @@ module.exports = (app) => {
     scope: ['profile', 'email']
   }));
 
-  app.get('/auth/google/callback', passport.authenticate('google'));
+  app.get(
+    '/auth/google/callback',
+    passport.authenticate('google'), //this makes sure user is authenticated
+    (req, res) => {
+      res.redirect('/surveys');
+    }
+  );
 
   app.get('/api/logout', (req, res) => {
     /* Attached automatically to the request object by passport
       - Calling 'logout()' takes the cookie that has the userid and kills the id
     */
     req.logout();
-    res.send(req.user);
+    res.redirect('/');
   })
 
   app.get('/api/current_user', (req, res) => {
