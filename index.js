@@ -5,6 +5,7 @@ const express = require('express');
 const keys = require('./config/keys.js');
 const cookieSession = require('cookie-session');    // enable use of cookies
 const passport = require('passport');   // tell passport to make use of cookies
+const bodyParser = require('body-parser'); //body parsing middleware (middleware is wired up to express by the app.use call)
 const mongoose = require('mongoose');
 require('./models/User.js');    // require in the User model instance
 require('./services/passport.js');
@@ -14,6 +15,9 @@ mongoose.connect(keys.mongoURI, { useNewUrlParser: true });
 
 /* In a single nodeJS proj, there may be several diff express applications, this represents a running express app. Most projects will use a single application */
 const app = express();
+
+//middleware will parse the body and then assign it to req.body property of the incoming request object
+app.use(bodyParser.json());
 
 app.use(
   cookieSession({
@@ -35,6 +39,7 @@ app.use(passport.session());
   - Immediately invokes/calls the function we just required in.
 */
 require('./routes/authRoutes.js')(app);
+require('./routes/billingRoutes.js')(app);
 
 /* Instructs express to tell node (the runtime) to listen to PORT
     - Whenever Heroku runs our application, Heroku has ability to inject environment variables. Environemnet vairables are variables that are set in underlying runtime that node is running on top of. Heroku's opportunity to pass us runtime configurations that Heroku only wants to tell us only after it has deployed the application

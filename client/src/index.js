@@ -26,3 +26,6 @@ ReactDOM.render(
   <Provider store={store}><App /></Provider>, //Provider tag reads changes from redux store, any changes will cause the Provider to tell the rest of it's child components about the changes.
   document.querySelector('#root')
 );
+
+console.log('STRIPE KEY IS: ', process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
+console.log('Environment is: ', process.env.NODE_ENV);
