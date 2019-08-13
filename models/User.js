@@ -10,7 +10,8 @@ const { Schema } = mongoose;
 /* Use of mongoose takes away ability to have diff props in records. Records don't need to have the same properties in MongoDB but mongoose likes to see all props upfront
 */
 const userSchema = new Schema({
-  googleId: String
+  googleId: String,
+  credits: { type: Number, default: 0 }
 });
 
 // Tells mongoose that this new collection needs to be created with properties defined in userSchema
