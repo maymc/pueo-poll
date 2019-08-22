@@ -16,9 +16,9 @@ module.exports = app => {
 
     const { title, subject, body, recipients } = req.body;
     const survey = new Survey({
-      title: title,
-      body: body,
-      subject: subject,
+      title,
+      subject,
+      body,
       //recipients is an array of objects (subdoc)
       recipients: recipients.split(',').map(email => ({ email: email.trim() })),
       _user: req.user.id,
@@ -28,6 +28,7 @@ module.exports = app => {
 
     //Great place to send an email
     const mailer = new Mailer(survey, surveyTemplate(survey));
+    mailer.send();
 
 
   })

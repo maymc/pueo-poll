@@ -27,7 +27,7 @@ class Mailer extends helper.Mail {
   formatAddresses(recipients) {
     //for every recipient, pull out the email property
     return recipients.map(({ email }) => {
-      return newhelper.Email(email);  //format with email helper from sendgrid
+      return new helper.Email(email);  //format with email helper from sendgrid
     })
   }
 
