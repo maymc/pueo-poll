@@ -13,8 +13,10 @@ import reduxThunk from 'redux-thunk';
 
 import App from './components/App';
 import reducers from './reducers';  //import statement for all the diff reducers
-// import axios from 'axios'; //used to text the mailer
-// window.axios = axios;
+
+// Development only - axios helpers used to test the mailer
+import axios from 'axios';
+window.axios = axios;
 
 // First arg in createStore() are all the reducers we have in the application
 // 2nd arg is initial state of the app
