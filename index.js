@@ -8,6 +8,7 @@ const passport = require('passport');   // tell passport to make use of cookies
 const bodyParser = require('body-parser'); //body parsing middleware (middleware is wired up to express by the app.use call)
 const mongoose = require('mongoose');
 require('./models/User.js');    // require in the User model instance
+require('./models/Survey.js');
 require('./services/passport.js');
 
 // Instruct mongoose to connect to copy of mongoDB
@@ -40,6 +41,7 @@ app.use(passport.session());
 */
 require('./routes/authRoutes.js')(app);
 require('./routes/billingRoutes.js')(app);
+require('./routes/surveyRoutes.js')(app);
 
 //make sure express behaves currently when in the production environment
 if (process.env.NODE_ENV === 'production') {
