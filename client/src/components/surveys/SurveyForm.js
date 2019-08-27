@@ -4,13 +4,13 @@ import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { Link } from 'react-router-dom';
 import SurveyField from './SurveyField';
-
+import validateEmails from '../../utils/validateEmails';
 
 const FIELDS = [
   { label: 'Survey Title', name: 'title' },
   { label: 'Subject Line', name: 'subject' },
   { label: 'Email Body', name: 'body' },
-  { label: 'Recipient', name: 'emails' }
+  { label: 'Recipient List', name: 'emails' }
 ];
 
 class SurveyForm extends Component {
@@ -46,7 +46,24 @@ class SurveyForm extends Component {
   }
 }
 
+//takes a single argument of values. Values is an object containing all the diff values coming off the form
+function validate(values) {
+  const errors = {};
+
+  errors.emails = validateEmails(values.emails || '');
+
+  _.each(FIELDS, ({ name }) => {
+    if (!values[name]) {
+      errors[name] = 'You must provide a value';
+    }
+  });
+
+  //If redux form gets an empty object back then it assumes that the entire form is valid
+  return errors;
+}
+
 export default reduxForm({
+  validate,
   //ReduxForm only requires one option to be passed inside this object and that property is 'form'
   form: 'surveyForm'
 })(SurveyForm);
